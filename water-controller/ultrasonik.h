@@ -4,7 +4,7 @@ const int trigPin = 5;
 const int echoPin = 18;
 
 long duration;
-float distanceCm;
+float distance;
 
 void setup_ultrasonic(){
   pinMode(trigPin, OUTPUT);
@@ -25,5 +25,5 @@ void loop_ultrasonik(){
   duration = pulseIn(echoPin, HIGH);
   
   // Calculate the distance
-  distanceCm = duration * SOUND_SPEED/2;
+  distance = duration * SOUND_SPEED/2;
 }
