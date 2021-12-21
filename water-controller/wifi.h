@@ -6,6 +6,8 @@
 WiFiClientSecure client;
 UniversalTelegramBot bot(BOTtoken, client);
 
+// Handle what happens when you receive new messages
+
 void setup_wifi(){
   Serial.print("Connecting Wifi: ");
   Serial.println(ssid);
