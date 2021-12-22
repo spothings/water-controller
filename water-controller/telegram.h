@@ -39,5 +39,19 @@ void handleNewMessages(int numNewMessages) {
       String set_distance = "Ketinggian air sudah diatur : " + String(box_high) + ".\n";
       bot.sendMessage(CHAT_ID, set_distance, "");
     }
+    
+    if (text == "/info") {
+      String information = "Ketinggian air maksimal : " + String(box_high) + ".\n";
+      information += "Ketinggian air saat ini : " + String(distance) + ".\n";
+      information += "Baterai voltase : " + String(analogRead(voltagePin)) + "V.\n";
+      String selenoidStatus;
+      if(selenoid_status){
+        selenoidStatus = "On";
+      }else{
+        selenoidStatus = "Off";
+      }
+      information += "Selenoid status : " + selenoidStatus + ".\n";
+      bot.sendMessage(CHAT_ID, information, "");
+    }
   }
 }

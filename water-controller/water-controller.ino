@@ -1,7 +1,6 @@
 #include "secret.h"
 #include "wifi.h"
 #include "ultrasonik.h"
-#include "telegram.h"
 
 // declarate to multi core
 TaskHandle_t Message;
@@ -17,6 +16,8 @@ bool selenoid_status = false;
 const int voltagePin = 34;
 bool voltageStatusOld = true;
 bool voltageStatusNew = true;
+
+#include "telegram.h"
 
 void setup() {
   Serial.begin(115200);
