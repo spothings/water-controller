@@ -9,6 +9,7 @@ unsigned long lastTimeBotRan;
 void setup_telegram(){
   client.setCACert(TELEGRAM_CERTIFICATE_ROOT);
 
+  // send message to telegram on startup
   bot.sendMessage(CHAT_ID, "Bot started up", "");
 }
 

@@ -2,26 +2,37 @@
 #include "wifi.h"
 #include "ultrasonik.h"
 #include "telegram.h"
-#include "selenoid.h"
 
-TaskHandle_t Scan;
+// declarate to multi core
 TaskHandle_t Message;
+TaskHandle_t Scan;
 
+// variable relay/selenoid
 int waiting_on = 0;
 int waiting_off = 0;
-bool status = false;
+const int selenoidPin = 26;
+bool selenoid_status = false;
+
+// variable voltage sensor
+const int voltagePin = 34;
+bool voltageStatusOld = true;
+bool voltageStatusNew = true;
 
 void setup() {
   Serial.begin(115200);
   setup_wifi();
   setup_ultrasonic();
   setup_telegram();
-  setup_selenoid();
 
-  xTaskCreatePinnedToCore(ScanCode, "Scan", 10000, NULL, 1, &Scan, 0);
+  // set pin selenoid as output
+  pinMode(selenoidPin, OUTPUT);
+
+  // configure core 1 (handle messages)
+  xTaskCreatePinnedToCore(MessageCode, "Message", 10000, NULL, 1, &Message, 0);
   delay(500);
-  
-  xTaskCreatePinnedToCore(MessageCode, "Message", 10000, NULL, 1, &Message, 1);
+
+  // configure core 2 (scan water)
+  xTaskCreatePinnedToCore(ScanCode, "Scan", 10000, NULL, 1, &Scan, 1);
   delay(500);
 }
 
@@ -36,24 +47,26 @@ void ScanCode( void * pvParameters ){
     Serial.print(waiting_off);
     Serial.print(" : ");
     Serial.print(box_high);
+    Serial.print(" : ");
+    Serial.print(analogRead(voltagePin));
     
-    if(status){
-      digitalWrite(selenoid, HIGH);
+    if(selenoid_status){
+      digitalWrite(selenoidPin, HIGH);
       Serial.println(" : Selenoid On");
     }else{
-      digitalWrite(selenoid, LOW);
+      digitalWrite(selenoidPin, LOW);
       Serial.println(" : Selenoid Off");
     }
     
     if(distance > box_high){
       if(waiting_on >= 5){
-        status = true;
+        selenoid_status = true;
       }
       waiting_on += 1;
       waiting_off = 0;
     }else{
       if(waiting_off >= 5){
-        status = false;
+        selenoid_status = false;
       }
       waiting_on = 0;
       waiting_off += 1;
@@ -73,6 +86,19 @@ void MessageCode( void * pvParameters ){
         numNewMessages = bot.getUpdates(bot.last_message_received + 1);
       }
       lastTimeBotRan = millis();
+    }
+
+    if(voltageStatusNew != voltageStatusOld){
+      if(!voltageStatusNew){
+        bot.sendMessage(CHAT_ID, "Baterai is Low", "");
+      }
+      voltageStatusOld = voltageStatusNew;
+    }else{
+      if(analogRead(voltagePin) > minVoltage){
+        voltageStatusNew = true;
+      }else{
+        voltageStatusNew = false;
+      }
     }
   }
 }
