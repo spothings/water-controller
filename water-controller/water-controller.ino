@@ -16,6 +16,7 @@ void setup() {
   setup_wifi();
   setup_ultrasonic();
   setup_telegram();
+  setup_selenoid();
 
   xTaskCreatePinnedToCore(ScanCode, "Scan", 10000, NULL, 1, &Scan, 0);
   delay(500);
