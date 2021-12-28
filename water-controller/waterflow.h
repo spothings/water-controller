@@ -26,7 +26,7 @@ void setup_waterflow(){
    cloopTime = currentTime;
 }
 
-void loop_waterflow (){
+float loop_waterflow (){
   currentTime = millis();
   
   // Every second, calculate and print litres/hour
@@ -44,11 +44,10 @@ void loop_waterflow (){
       // Reset Counter
       flow_frequency = 0;
 
-      // Print litres/hour
-      Serial.print(l_minute, DEC);
-      Serial.println(" L/Sec");
+      // return litres/hour
+      return l_minute, DEC;
     } else {
-      Serial.println("0");
+      return 0.0;
     }
   }
 }

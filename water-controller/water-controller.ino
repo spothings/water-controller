@@ -1,4 +1,5 @@
 float distance = 0.0;
+float waterflow = 0.0;
 
 // declarate to multi core
 TaskHandle_t Message;
@@ -62,6 +63,8 @@ void ScanCode( void * pvParameters ){
       digitalWrite(selenoidPin, LOW);
       Serial.print(" : Selenoid Off : ");
     }
+
+    Serial.println(waterflow);
     
     if(distance > box_high){
       if(waiting_on >= 5){
@@ -77,7 +80,7 @@ void ScanCode( void * pvParameters ){
       waiting_off += 1;
     }
 
-    loop_waterflow();
+    waterflow = loop_waterflow();
     delay(1000);
   } 
 }
