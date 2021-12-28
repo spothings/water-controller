@@ -98,9 +98,14 @@ void MessageCode( void * pvParameters ){
       lastTimeBotRan = millis();
     }
 
+    // Notify for baterai status
     if(voltageStatusNew != voltageStatusOld){
-      if(!voltageStatusNew){
+      if(voltageStatusNew == 0.00){
+        bot.sendMessage(CHAT_ID, "Baterai is Missing", "");
+      } else if(!voltageStatusNew){
         bot.sendMessage(CHAT_ID, "Baterai is Low", "");
+      } else {
+        bot.sendMessage(CHAT_ID, "Baterai is Good", "");
       }
       voltageStatusOld = voltageStatusNew;
     }else{
