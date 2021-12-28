@@ -35,8 +35,9 @@ void handleNewMessages(int numNewMessages) {
       String welcome = "Hallo, " + from_name + ".\n";
       welcome += "Silahkan atur jarak ketinggian air\n\n";
       bot.sendMessage(CHAT_ID, welcome, "");
-      box_high = distance;
-      String set_distance = "Ketinggian air sudah diatur : " + String(box_high) + ".\n";
+//      box_high = distance;
+      box_high = write_storage(distance);
+      String set_distance = "Ketinggian air sudah diatur : " + String(distance) + ".\n";
       bot.sendMessage(CHAT_ID, set_distance, "");
     }
     

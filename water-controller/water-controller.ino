@@ -1,6 +1,6 @@
+int voltage;
 float distance;
 double waterflow;
-int voltage;
 String selenoid;
 
 // declarate to multi core
@@ -15,6 +15,7 @@ bool ultrasonikStatusNew = true;
 
 #include "secret.h"
 #include "wifi.h"
+#include "storage.h"
 #include "voltage.h"
 #include "ultrasonik.h"
 #include "waterflow.h"
@@ -25,6 +26,7 @@ void setup() {
   Serial.begin(115200);
   
   setup_wifi();
+  setup_storage();
   setup_ultrasonic();
   setup_waterflow();
   setup_selenoid();
@@ -50,9 +52,10 @@ void ScanCode( void * pvParameters ){
     Serial.print(distance); Serial.print(" : ");
     Serial.print(waiting_on); Serial.print(" : ");
     Serial.print(waiting_off); Serial.print(" : ");
-    Serial.print(box_high); Serial.print(" : ");
     Serial.print(voltage); Serial.print(" : ");
-    Serial.print(waterflow); Serial.print("\n");
+    Serial.print(waterflow); Serial.print(" : ");
+    Serial.print(box_high); Serial.print(" : ");
+    Serial.print(minVoltage); Serial.print("\n");
     
     delay(1000);
   } 
@@ -61,6 +64,7 @@ void ScanCode( void * pvParameters ){
 void MessageCode( void * pvParameters ){
   for(;;){
     loop_telegram();
+    loop_storage();
 
     // Notify for baterai status
     if(voltageStatusNew != voltageStatusOld){
