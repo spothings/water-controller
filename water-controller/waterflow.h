@@ -26,7 +26,8 @@ void setup_waterflow(){
    cloopTime = currentTime;
 }
 
-float loop_waterflow (){
+double loop_waterflow (){
+  double correntflow;
   currentTime = millis();
   
   // Every second, calculate and print litres/hour
@@ -44,10 +45,11 @@ float loop_waterflow (){
       // Reset Counter
       flow_frequency = 0;
 
-      // return litres/hour
-      return l_minute, DEC;
+      // return value
+      correntflow = 100 * l_minute, DEC;
+      return correntflow;
     } else {
-      return 0.0;
+      return 0;
     }
   }
 }

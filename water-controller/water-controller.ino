@@ -1,5 +1,5 @@
-float distance = 0.0;
-float waterflow = 0.0;
+float distance;
+double waterflow;
 
 // declarate to multi core
 TaskHandle_t Message;
@@ -68,8 +68,6 @@ void ScanCode( void * pvParameters ){
       digitalWrite(selenoidPin, LOW);
       Serial.print(" : Selenoid Off : ");
     }
-
-    Serial.println(waterflow);
     
     if(distance > box_high){
       if(waiting_on >= 5){
@@ -86,6 +84,8 @@ void ScanCode( void * pvParameters ){
     }
 
     waterflow = loop_waterflow();
+    Serial.println(waterflow);
+    
     delay(1000);
   } 
 }
@@ -138,11 +138,11 @@ void MessageCode( void * pvParameters ){
     }
 
     // Notify for waterflow
-    if(selenoid_status && waterflow == 0.00){
-      bot.sendMessage(CHAT_ID, "Selenoid have error", "");
-    } else if(waterflow != 0.00 && !selenoid_status){
-      bot.sendMessage(CHAT_ID, "Waterflow have error", "");
-    }
+//    if(selenoid_status && waterflow == 0){
+//      bot.sendMessage(CHAT_ID, "Selenoid have error", "");
+//    } else if(waterflow != 0 && !selenoid_status){
+//      bot.sendMessage(CHAT_ID, "Waterflow have error", "");
+//    }
   }
 }
 
