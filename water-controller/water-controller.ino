@@ -136,6 +136,11 @@ void MessageCode( void * pvParameters ){
         ultrasonikStatusNew = false;
       }
     }
+
+    // Notify for waterflow
+    if(selenoid_status && waterflow == 0.00){
+      bot.sendMessage(CHAT_ID, "Sistem have missing", "");
+    }
   }
 }
 
