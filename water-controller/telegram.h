@@ -55,3 +55,16 @@ void handleNewMessages(int numNewMessages) {
     }
   }
 }
+
+void loop_telegram(){
+      if (millis() > lastTimeBotRan + botRequestDelay)  {
+      int numNewMessages = bot.getUpdates(bot.last_message_received + 1);
+  
+      while(numNewMessages) {
+        Serial.println("got response");
+        handleNewMessages(numNewMessages);
+        numNewMessages = bot.getUpdates(bot.last_message_received + 1);
+      }
+      lastTimeBotRan = millis();
+    }
+}

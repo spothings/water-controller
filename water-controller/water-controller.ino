@@ -13,7 +13,6 @@ bool voltageStatusNew = true;
 bool ultrasonikStatusOld = true;
 bool ultrasonikStatusNew = true;
 
-
 #include "secret.h"
 #include "wifi.h"
 #include "voltage.h"
@@ -61,16 +60,7 @@ void ScanCode( void * pvParameters ){
 
 void MessageCode( void * pvParameters ){
   for(;;){
-    if (millis() > lastTimeBotRan + botRequestDelay)  {
-      int numNewMessages = bot.getUpdates(bot.last_message_received + 1);
-  
-      while(numNewMessages) {
-        Serial.println("got response");
-        handleNewMessages(numNewMessages);
-        numNewMessages = bot.getUpdates(bot.last_message_received + 1);
-      }
-      lastTimeBotRan = millis();
-    }
+    loop_telegram();
 
     // Notify for baterai status
     if(voltageStatusNew != voltageStatusOld){
