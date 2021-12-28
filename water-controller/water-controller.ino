@@ -50,24 +50,20 @@ void setup() {
 void ScanCode( void * pvParameters ){
   for(;;){
     distance = loop_ultrasonik();
-    Serial.print("Distance : ");
-    Serial.print(distance);
-    Serial.print(" : ");
-    Serial.print(waiting_on);
-    Serial.print(" : ");
-    Serial.print(waiting_off);
-    Serial.print(" : ");
-    Serial.print(box_high);
-    Serial.print(" : ");
-    Serial.print(analogRead(voltagePin));
     
     if(selenoid_status){
       digitalWrite(selenoidPin, HIGH);
-      Serial.print(" : Selenoid On : ");
+      Serial.print("On : ");
     }else{
       digitalWrite(selenoidPin, LOW);
-      Serial.print(" : Selenoid Off : ");
+      Serial.print("Off : ");
     }
+    
+    Serial.print(distance); Serial.print(" : ");
+    Serial.print(waiting_on); Serial.print(" : ");
+    Serial.print(waiting_off); Serial.print(" : ");
+    Serial.print(box_high); Serial.print(" : ");
+    Serial.print(analogRead(voltagePin)); Serial.print(" : ");
     
     if(distance > box_high){
       if(waiting_on >= 5){
