@@ -1,6 +1,7 @@
 #include "secret.h"
 #include "wifi.h"
 #include "ultrasonik.h"
+#include "waterflow.h"
 
 // declarate to multi core
 TaskHandle_t Message;
@@ -23,6 +24,7 @@ void setup() {
   Serial.begin(115200);
   setup_wifi();
   setup_ultrasonic();
+  setup_waterflow();
   setup_telegram();
 
   // set pin selenoid as output
@@ -53,10 +55,10 @@ void ScanCode( void * pvParameters ){
     
     if(selenoid_status){
       digitalWrite(selenoidPin, HIGH);
-      Serial.println(" : Selenoid On");
+      Serial.print(" : Selenoid On : ");
     }else{
       digitalWrite(selenoidPin, LOW);
-      Serial.println(" : Selenoid Off");
+      Serial.print(" : Selenoid Off : ");
     }
     
     if(distance > box_high){
@@ -72,6 +74,8 @@ void ScanCode( void * pvParameters ){
       waiting_on = 0;
       waiting_off += 1;
     }
+
+    loop_waterflow();
     delay(1000);
   } 
 }
