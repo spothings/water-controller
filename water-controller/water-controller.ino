@@ -1,3 +1,5 @@
+float distance = 0.0;
+
 // declarate to multi core
 TaskHandle_t Message;
 TaskHandle_t Scan;
@@ -41,7 +43,7 @@ void setup() {
 
 void ScanCode( void * pvParameters ){
   for(;;){
-    loop_ultrasonik();
+    distance = loop_ultrasonik();
     Serial.print("Distance : ");
     Serial.print(distance);
     Serial.print(" : ");
