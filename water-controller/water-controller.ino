@@ -1,5 +1,6 @@
 float distance;
 double waterflow;
+int voltage;
 
 // declarate to multi core
 TaskHandle_t Message;
@@ -11,9 +12,6 @@ int waiting_off = 0;
 const int selenoidPin = 26;
 bool selenoid_status = false;
 
-// variable voltage sensor
-const int voltagePin = 34;
-
 // variable for notification
 bool voltageStatusOld = true;
 bool voltageStatusNew = true;
@@ -23,6 +21,7 @@ bool ultrasonikStatusNew = true;
 
 #include "secret.h"
 #include "wifi.h"
+#include "voltage.h"
 #include "ultrasonik.h"
 #include "waterflow.h"
 #include "telegram.h"
@@ -50,21 +49,9 @@ void setup() {
 void ScanCode( void * pvParameters ){
   for(;;){
     distance = loop_ultrasonik();
-    
-    if(selenoid_status){
-      digitalWrite(selenoidPin, HIGH);
-      Serial.print("On : ");
-    }else{
-      digitalWrite(selenoidPin, LOW);
-      Serial.print("Off : ");
-    }
-    
-    Serial.print(distance); Serial.print(" : ");
-    Serial.print(waiting_on); Serial.print(" : ");
-    Serial.print(waiting_off); Serial.print(" : ");
-    Serial.print(box_high); Serial.print(" : ");
-    Serial.print(analogRead(voltagePin)); Serial.print(" : ");
-    
+    waterflow = loop_waterflow();
+    voltage = loop_voltage();
+        
     if(distance > box_high){
       if(waiting_on >= 5){
         selenoid_status = true;
@@ -79,8 +66,20 @@ void ScanCode( void * pvParameters ){
       waiting_off += 1;
     }
 
-    waterflow = loop_waterflow();
-    Serial.println(waterflow);
+    if(selenoid_status){
+      digitalWrite(selenoidPin, HIGH);
+      Serial.print("On : ");
+    }else{
+      digitalWrite(selenoidPin, LOW);
+      Serial.print("Off : ");
+    }
+    
+    Serial.print(distance); Serial.print(" : ");
+    Serial.print(waiting_on); Serial.print(" : ");
+    Serial.print(waiting_off); Serial.print(" : ");
+    Serial.print(box_high); Serial.print(" : ");
+    Serial.print(voltage); Serial.print(" : ");
+    Serial.print(waterflow); Serial.print("\n");
     
     delay(1000);
   } 
@@ -110,7 +109,7 @@ void MessageCode( void * pvParameters ){
       }
       voltageStatusOld = voltageStatusNew;
     }else{
-      if(analogRead(voltagePin) > minVoltage){
+      if(voltage > minVoltage){
         voltageStatusNew = true;
       }else{
         voltageStatusNew = false;
