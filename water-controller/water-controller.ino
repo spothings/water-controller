@@ -1,8 +1,3 @@
-#include "secret.h"
-#include "wifi.h"
-#include "ultrasonik.h"
-#include "waterflow.h"
-
 // declarate to multi core
 TaskHandle_t Message;
 TaskHandle_t Scan;
@@ -18,10 +13,15 @@ const int voltagePin = 34;
 bool voltageStatusOld = true;
 bool voltageStatusNew = true;
 
+#include "secret.h"
+#include "wifi.h"
+#include "ultrasonik.h"
+#include "waterflow.h"
 #include "telegram.h"
 
 void setup() {
   Serial.begin(115200);
+  
   setup_wifi();
   setup_ultrasonic();
   setup_waterflow();
