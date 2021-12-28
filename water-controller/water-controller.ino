@@ -13,8 +13,13 @@ bool selenoid_status = false;
 
 // variable voltage sensor
 const int voltagePin = 34;
+
+// variable for notification
 bool voltageStatusOld = true;
 bool voltageStatusNew = true;
+bool ultrasonikStatusOld = true;
+bool ultrasonikStatusNew = true;
+
 
 #include "secret.h"
 #include "wifi.h"
@@ -113,6 +118,22 @@ void MessageCode( void * pvParameters ){
         voltageStatusNew = true;
       }else{
         voltageStatusNew = false;
+      }
+    }
+    
+    // Notify for ultrasonic status
+    if(ultrasonikStatusNew != ultrasonikStatusOld){
+      if(ultrasonikStatusNew == 0.00){
+        bot.sendMessage(CHAT_ID, "Ultrasonik is Missing", "");
+      } else {
+        bot.sendMessage(CHAT_ID, "Ultrasonik is Good", "");
+      }
+      ultrasonikStatusOld = ultrasonikStatusNew;
+    }else{
+      if(distance != 0.00){
+        ultrasonikStatusNew = true;
+      }else{
+        ultrasonikStatusNew = false;
       }
     }
   }
