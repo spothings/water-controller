@@ -1,16 +1,11 @@
 float distance;
 double waterflow;
 int voltage;
+String selenoid;
 
 // declarate to multi core
 TaskHandle_t Message;
 TaskHandle_t Scan;
-
-// variable relay/selenoid
-int waiting_on = 0;
-int waiting_off = 0;
-const int selenoidPin = 26;
-bool selenoid_status = false;
 
 // variable for notification
 bool voltageStatusOld = true;
@@ -24,6 +19,7 @@ bool ultrasonikStatusNew = true;
 #include "voltage.h"
 #include "ultrasonik.h"
 #include "waterflow.h"
+#include "selenoid.h"
 #include "telegram.h"
 
 void setup() {
@@ -32,10 +28,8 @@ void setup() {
   setup_wifi();
   setup_ultrasonic();
   setup_waterflow();
+  setup_selenoid();
   setup_telegram();
-
-  // set pin selenoid as output
-  pinMode(selenoidPin, OUTPUT);
 
   // configure core 1 (handle messages)
   xTaskCreatePinnedToCore(MessageCode, "Message", 10000, NULL, 1, &Message, 0);
@@ -51,29 +45,9 @@ void ScanCode( void * pvParameters ){
     distance = loop_ultrasonik();
     waterflow = loop_waterflow();
     voltage = loop_voltage();
-        
-    if(distance > box_high){
-      if(waiting_on >= 5){
-        selenoid_status = true;
-      }
-      waiting_on += 1;
-      waiting_off = 0;
-    }else{
-      if(waiting_off >= 5){
-        selenoid_status = false;
-      }
-      waiting_on = 0;
-      waiting_off += 1;
-    }
+    selenoid = loop_selenoid();
 
-    if(selenoid_status){
-      digitalWrite(selenoidPin, HIGH);
-      Serial.print("On : ");
-    }else{
-      digitalWrite(selenoidPin, LOW);
-      Serial.print("Off : ");
-    }
-    
+    Serial.print(selenoid); Serial.print(" : ");
     Serial.print(distance); Serial.print(" : ");
     Serial.print(waiting_on); Serial.print(" : ");
     Serial.print(waiting_off); Serial.print(" : ");
