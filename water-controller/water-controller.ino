@@ -139,7 +139,9 @@ void MessageCode( void * pvParameters ){
 
     // Notify for waterflow
     if(selenoid_status && waterflow == 0.00){
-      bot.sendMessage(CHAT_ID, "Sistem have missing", "");
+      bot.sendMessage(CHAT_ID, "Selenoid have error", "");
+    } else if(waterflow != 0.00 && !selenoid_status){
+      bot.sendMessage(CHAT_ID, "Waterflow have error", "");
     }
   }
 }
