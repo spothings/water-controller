@@ -1,7 +1,7 @@
 // variable relay/selenoid
 int waiting_on = 0;
 int waiting_off = 0;
-const int selenoidPin = 26;
+const int selenoidPin = 26; //
 bool selenoid_status = false;
 String selenoidString;
 

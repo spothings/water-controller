@@ -5,7 +5,7 @@ volatile int flow_frequency;
 float vol = 0.0,l_minute;
 
 // Sensor Input
-unsigned char flowsensor = 2;
+unsigned char flowsensor = 15; // 15 - 2
 unsigned long currentTime;
 unsigned long cloopTime;
 

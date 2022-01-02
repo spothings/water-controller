@@ -1,5 +1,5 @@
 // variable voltage sensor
-const int voltagePin = 34;
+const int voltagePin = 35; // 35 - 34
 int voltageValue;
 
 const int minVoltage = 2300;
