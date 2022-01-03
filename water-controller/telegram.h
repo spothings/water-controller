@@ -94,7 +94,7 @@ void loop_telegram(){
 
     if(teleMonitor){
       String printMonitor = String(selenoid) + " \t: " + String(distance) + "CM \t: " + String(waiting_on) + " \t: " + String(waiting_off) + " \t: " + 
-      String(waterflow) + "L/m \t: " + String(maxWater) + "CM \t: " + String(minWater) +"CM\n";
+      String(voltage) + "V \t: " + String(waterflow) + "L/m \t: " + String(maxWater) + "CM \t: " + String(minWater) +"CM\n";
 
       bot.sendMessage(CHAT_ID, printMonitor, "");
     }
