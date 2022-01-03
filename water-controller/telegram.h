@@ -4,6 +4,7 @@
 UniversalTelegramBot bot(BOTtoken, client);
 
 int botRequestDelay = 1000;
+bool teleMonitor = false;
 unsigned long lastTimeBotRan;
 
 void setup_telegram(){
@@ -35,7 +36,7 @@ void handleNewMessages(int numNewMessages) {
       String welcome = "Hallo, " + from_name + ".\n";
       welcome += "Silahkan atur jarak ketinggian air\n\n";
       bot.sendMessage(CHAT_ID, welcome, "");
-//      maxWater = distance;
+
       maxWater = write_storage(distance);
       String set_distance = "Ketinggian air sudah diatur : " + String(distance) + ".\n";
       bot.sendMessage(CHAT_ID, set_distance, "");
@@ -54,11 +55,23 @@ void handleNewMessages(int numNewMessages) {
       information += "Selenoid status : " + selenoidStatus + ".\n";
       bot.sendMessage(CHAT_ID, information, "");
     }
+
+    if (text == "/monitor") {
+      String printMonitor;
+      if(teleMonitor){
+        printMonitor = "Monitoring off";
+        teleMonitor = false;
+      } else {
+        printMonitor = "Selenoid,\tDistance,\tWaitingOn,\tWaitingOff,\tWaterflow,\tmaxWater\n";
+        teleMonitor = true;
+      }
+      bot.sendMessage(CHAT_ID, printMonitor, "");
+    }
   }
 }
 
 void loop_telegram(){
-      if (millis() > lastTimeBotRan + botRequestDelay)  {
+    if (millis() > lastTimeBotRan + botRequestDelay)  {
       int numNewMessages = bot.getUpdates(bot.last_message_received + 1);
   
       while(numNewMessages) {
@@ -67,5 +80,12 @@ void loop_telegram(){
         numNewMessages = bot.getUpdates(bot.last_message_received + 1);
       }
       lastTimeBotRan = millis();
+    }
+
+    if(teleMonitor){
+      String printMonitor = String(selenoid) + " \t: " + String(distance) + " \t: " + String(waiting_on) + " \t: " + String(waiting_off) + " \t: " + 
+      String(waterflow) + " \t: " + String(maxWater) +"\n";
+
+      bot.sendMessage(CHAT_ID, printMonitor, "");
     }
 }
