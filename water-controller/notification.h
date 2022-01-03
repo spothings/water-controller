@@ -6,14 +6,14 @@ bool ultrasonikStatusNew = true;
 bool waterflowStatusOld = true;
 bool waterflowStatusNew = true;
 
-void seril_monitor(){
+void serial_monitor(){
     Serial.print(selenoid); Serial.print(" : ");
     Serial.print(distance); Serial.print(" : ");
     Serial.print(waiting_on); Serial.print(" : ");
     Serial.print(waiting_off); Serial.print(" : ");
     Serial.print(voltage); Serial.print(" : ");
     Serial.print(waterflow); Serial.print(" : ");
-    Serial.print(box_high); Serial.print(" : ");
+    Serial.print(maxWater); Serial.print(" : ");
     Serial.print(minVoltage); Serial.print("\n");
 }
 
@@ -58,14 +58,14 @@ void ultrasonic_status(){
 void waterflow_status(){
     // Notify for waterflow
     if(waterflowStatusNew != waterflowStatusOld){
-      if(selenoid_status && waterflow == 0){
+      if(selenoid_status && waterflow == 0.00){
         bot.sendMessage(CHAT_ID, "Selenoid or waterflow have error", "");
-      } else if(waterflow != 0 && !selenoid_status){
+      } else if(waterflow != 0.00 && !selenoid_status){
         bot.sendMessage(CHAT_ID, "Selenoid or waterflow have error", "");
       }
       waterflowStatusOld = waterflowStatusNew;
     } else {
-      if(selenoid_status && waterflow != 0 || !selenoid_status && waterflow == 0){
+      if(selenoid_status && waterflow != 0.00 || !selenoid_status && waterflow == 0.00){
         waterflowStatusNew = true;
       } else {
         waterflowStatusNew = false;

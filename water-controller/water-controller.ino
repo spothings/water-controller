@@ -47,7 +47,7 @@ void ScanCode( void * pvParameters ){
     selenoid = loop_selenoid();
 
     // print to serial monitor
-    seril_monitor();
+    serial_monitor();
 
     // make delay 1s to sensor scan
     delay(1000);

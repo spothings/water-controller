@@ -1,8 +1,8 @@
 // variable relay/selenoid
 int waiting_on = 0;
 int waiting_off = 0;
-const int selenoidPin = 26; //
 bool selenoid_status = false;
+const int selenoidPin = 26;
 String selenoidString;
 
 void setup_selenoid(){
@@ -11,7 +11,7 @@ void setup_selenoid(){
 }
 
 String loop_selenoid(){
-  if(distance > box_high){
+  if(distance > maxWater){
     if(waiting_on >= 5){
       selenoid_status = true;
       digitalWrite(selenoidPin, HIGH);
@@ -26,6 +26,7 @@ String loop_selenoid(){
     waiting_on = 0;
     waiting_off += 1;
   }
+
   if(selenoid_status){
     selenoidString = "On";
   } else {
