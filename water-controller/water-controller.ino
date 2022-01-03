@@ -1,12 +1,10 @@
+// declarate variable sensor
 int voltage;
 float distance;
 double waterflow;
 String selenoid;
 
-// declarate to multi core
-TaskHandle_t Message;
-TaskHandle_t Scan;
-
+// include local library
 #include "secret.h"
 #include "wifi.h"
 #include "storage.h"
@@ -17,9 +15,13 @@ TaskHandle_t Scan;
 #include "telegram.h"
 #include "notification.h"
 
+// declarate to multi core
+TaskHandle_t Message;
+TaskHandle_t Scan;
+
 void setup() {
   Serial.begin(115200);
-  
+
   setup_wifi();
   setup_storage();
   setup_ultrasonic();
@@ -38,28 +40,33 @@ void setup() {
 
 void ScanCode( void * pvParameters ){
   for(;;){
+    // read variable on sensor
     distance = loop_ultrasonik();
     waterflow = loop_waterflow();
     voltage = loop_voltage();
     selenoid = loop_selenoid();
 
+    // print to serial monitor
     seril_monitor();
-    
+
+    // make delay 1s to sensor scan
     delay(1000);
   } 
 }
 
 void MessageCode( void * pvParameters ){
   for(;;){
+    // run telegram and EEPROM
     loop_telegram();
     loop_storage();
 
+    // send notofication to telegram
     baterai_status();
     ultrasonic_status();
     waterflow_status();
   }
 }
 
-void loop() {
+void loop(){
   
 }
