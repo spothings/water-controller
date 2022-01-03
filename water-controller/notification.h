@@ -8,22 +8,21 @@ bool waterflowStatusNew = true;
 
 void serial_monitor(){
     Serial.print(selenoid); Serial.print(" : ");
-    Serial.print(distance); Serial.print(" : ");
+    Serial.print(distance); Serial.print("CM : ");
     Serial.print(waiting_on); Serial.print(" : ");
     Serial.print(waiting_off); Serial.print(" : ");
-    Serial.print(voltage); Serial.print(" : ");
-    Serial.print(waterflow); Serial.print(" : ");
-    Serial.print(maxWater); Serial.print(" : ");
-    Serial.print(minWater); Serial.print(" : ");
-    Serial.print(minVoltage); Serial.print("\n");
+    Serial.print(voltage); Serial.print("V : ");
+    Serial.print(waterflow); Serial.print("L/m : ");
+    Serial.print(maxWater); Serial.print("CM : ");
+    Serial.print(minWater); Serial.print("CM : ");
 }
 
 void baterai_status(){
   // Notify for baterai status
     if(voltageStatusNew != voltageStatusOld){
-      if(voltageStatusNew == 0.00){
+      if(voltage == 0){
         bot.sendMessage(CHAT_ID, "Baterai is Missing", "");
-      } else if(!voltageStatusNew){
+      } else if(voltage < minVoltage){
         bot.sendMessage(CHAT_ID, "Baterai is Low", "");
       } else {
         bot.sendMessage(CHAT_ID, "Baterai is Good", "");
