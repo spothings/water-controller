@@ -46,7 +46,7 @@ double loop_waterflow (){
       flow_frequency = 0;
 
       // return value
-      correntflow = 100 * l_minute, DEC;
+      correntflow = 60 * l_minute, DEC;
       return correntflow;
     } else {
       return 0;
