@@ -32,13 +32,23 @@ void handleNewMessages(int numNewMessages) {
 
     String from_name = bot.messages[i].from_name;
 
-    if (text == "/reset") {
+    if (text == "/reset_max") {
       String welcome = "Hallo, " + from_name + ".\n";
       welcome += "Silahkan atur jarak ketinggian air\n\n";
       bot.sendMessage(CHAT_ID, welcome, "");
 
-      maxWater = write_storage(distance);
-      String set_distance = "Ketinggian air sudah diatur : " + String(distance) + ".\n";
+      maxWater = write_maxWater(distance);
+      String set_distance = "Ketinggian maksimal air sudah diatur : " + String(distance) + ".\n";
+      bot.sendMessage(CHAT_ID, set_distance, "");
+    }
+
+    if (text == "/reset_min") {
+      String welcome = "Hallo, " + from_name + ".\n";
+      welcome += "Silahkan atur jarak minimal air\n\n";
+      bot.sendMessage(CHAT_ID, welcome, "");
+
+      minWater = write_minWater(distance);
+      String set_distance = "Ketinggian minimal air sudah diatur : " + String(distance) + ".\n";
       bot.sendMessage(CHAT_ID, set_distance, "");
     }
     
@@ -62,7 +72,7 @@ void handleNewMessages(int numNewMessages) {
         printMonitor = "Monitoring off";
         teleMonitor = false;
       } else {
-        printMonitor = "Selenoid,\tDistance,\tWaitingOn,\tWaitingOff,\tWaterflow,\tmaxWater\n";
+        printMonitor = "Selenoid,\tDistance,\tWaitingOn,\tWaitingOff,\tWaterflow,\tmaxWater,\tminWater\n";
         teleMonitor = true;
       }
       bot.sendMessage(CHAT_ID, printMonitor, "");
@@ -84,7 +94,7 @@ void loop_telegram(){
 
     if(teleMonitor){
       String printMonitor = String(selenoid) + " \t: " + String(distance) + " \t: " + String(waiting_on) + " \t: " + String(waiting_off) + " \t: " + 
-      String(waterflow) + " \t: " + String(maxWater) +"\n";
+      String(waterflow) + " \t: " + String(maxWater) + " \t: " + String(minWater) +"\n";
 
       bot.sendMessage(CHAT_ID, printMonitor, "");
     }

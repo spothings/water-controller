@@ -14,6 +14,7 @@ void serial_monitor(){
     Serial.print(voltage); Serial.print(" : ");
     Serial.print(waterflow); Serial.print(" : ");
     Serial.print(maxWater); Serial.print(" : ");
+    Serial.print(minWater); Serial.print(" : ");
     Serial.print(minVoltage); Serial.print("\n");
 }
 
@@ -62,6 +63,11 @@ void waterflow_status(){
         bot.sendMessage(CHAT_ID, "Selenoid or waterflow have error", "");
       } else if(waterflow != 0.00 && !selenoid_status){
         bot.sendMessage(CHAT_ID, "Selenoid or waterflow have error", "");
+      }
+      if(selenoid_status){
+        int time_to_full = time_water();
+        bot.sendMessage(CHAT_ID, "Water On", "");
+        bot.sendMessage(CHAT_ID, "Full estimate " + String(time_to_full) + " Minute", "");
       }
       waterflowStatusOld = waterflowStatusNew;
     } else {
