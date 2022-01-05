@@ -38,7 +38,7 @@ void handleNewMessages(int numNewMessages) {
       bot.sendMessage(CHAT_ID, welcome, "");
 
       maxWater = write_maxWater(distance);
-      String set_distance = "Ketinggian maksimal air sudah diatur : " + String(distance) + ".\n";
+      String set_distance = "Ketinggian maksimal air sudah diatur : " + String(distance) + " CM.\n";
       bot.sendMessage(CHAT_ID, set_distance, "");
     }
 
@@ -48,14 +48,14 @@ void handleNewMessages(int numNewMessages) {
       bot.sendMessage(CHAT_ID, welcome, "");
 
       minWater = write_minWater(distance);
-      String set_distance = "Ketinggian minimal air sudah diatur : " + String(distance) + ".\n";
+      String set_distance = "Ketinggian minimal air sudah diatur : " + String(distance) + " CM.\n";
       bot.sendMessage(CHAT_ID, set_distance, "");
     }
     
     if (text == "/info") {
       String information = "Ketinggian air maksimal : " + String(maxWater) + ".\n";
       information += "Ketinggian air saat ini : " + String(distance) + ".\n";
-      information += "Baterai voltase : " + String(analogRead(voltagePin)) + "V.\n";
+      information += "Baterai voltase : " + String(voltage) + "V.\n";
       String selenoidStatus;
       if(selenoid_status){
         selenoidStatus = "On";
@@ -76,6 +76,16 @@ void handleNewMessages(int numNewMessages) {
         teleMonitor = true;
       }
       bot.sendMessage(CHAT_ID, printMonitor, "");
+    }
+
+    if (text == "/off") {
+      selenoid_status = false;
+      bot.sendMessage(CHAT_ID, "Device Off", "");
+    }
+
+    if (text == "/on") {
+      selenoid_status = true;
+      bot.sendMessage(CHAT_ID, "Device On", "");
     }
   }
 }

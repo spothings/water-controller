@@ -61,6 +61,6 @@ double loop_waterflow (){
 int time_water(){
   int volumeWater = waterWidth * waterLength * (minWater-maxWater);
   volumeWater = volumeWater - (waterWidth * waterLength * (minWater-distance));
-  int time_to_full = volumeWater/(waterflow/720);
+  int time_to_full = (volumeWater/(waterflow/720))/320;
   return time_to_full;
 }

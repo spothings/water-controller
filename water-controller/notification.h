@@ -20,16 +20,16 @@ void serial_monitor(){
 void baterai_status(){
   // Notify for baterai status
     if(voltageStatusNew != voltageStatusOld){
-      if(voltage == 0){
+      if(!selenoid_status && voltage == 0){
         bot.sendMessage(CHAT_ID, "Baterai is Missing", "");
-      } else if(voltage < minVoltage){
+      } else if(!selenoid_status && voltage < minVoltage){
         bot.sendMessage(CHAT_ID, "Baterai is Low", "");
       } else {
         bot.sendMessage(CHAT_ID, "Baterai is Good", "");
       }
       voltageStatusOld = voltageStatusNew;
     }else{
-      if(voltage > minVoltage){
+      if(!selenoid_status && voltage > minVoltage){
         voltageStatusNew = true;
       }else{
         voltageStatusNew = false;

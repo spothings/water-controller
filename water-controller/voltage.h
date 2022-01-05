@@ -2,7 +2,7 @@
 const int voltagePin = 35; // 35 - 34
 int voltageValue;
 
-const int minVoltage = 10;
+const int minVoltage = 8;
 
 int loop_voltage(){
   voltageValue = analogRead(voltagePin);

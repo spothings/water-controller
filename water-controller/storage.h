@@ -1,8 +1,8 @@
 #include <EEPROM.h>
 #define EEPROM_SIZE 2
 
-int maxWater;
-int minWater;
+float maxWater;
+float minWater;
 
 void setup_storage(){
   EEPROM.begin(EEPROM_SIZE);
@@ -16,13 +16,13 @@ void loop_storage(){
   minWater = EEPROM.read(1);
 }
 
-int write_maxWater(int distance){
+float write_maxWater(float distance){
   EEPROM.write(0, distance);
   EEPROM.commit();
   return distance;
 }
 
-int write_minWater(int distance){
+float write_minWater(float distance){
   EEPROM.write(1, distance);
   EEPROM.commit();
   return distance;
