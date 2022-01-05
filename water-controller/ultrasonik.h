@@ -9,8 +9,8 @@ void setup_ultrasonic(){
 }
 
 float loop_ultrasonik(){
-  long duration;
-  float distance;
+  long _duration;
+  float _distance;
   
   // Clears the trigPin
   digitalWrite(trigPin, LOW);
@@ -22,10 +22,10 @@ float loop_ultrasonik(){
   digitalWrite(trigPin, LOW);
   
   // Reads the echoPin, returns the sound wave travel time in microseconds
-  duration = pulseIn(echoPin, HIGH);
+  _duration = pulseIn(echoPin, HIGH);
   
   // Calculate the distance
-  distance = duration * SOUND_SPEED/2;
+  _distance = _duration * SOUND_SPEED/2;
 
-  return distance;
+  return _distance;
 }

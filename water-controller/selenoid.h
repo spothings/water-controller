@@ -2,7 +2,7 @@
 int waiting_on = 0;
 int waiting_off = 0;
 bool selenoid_status = false;
-bool selenoid_on_tele = true;
+bool selenoid_on_tele = false;
 const int selenoidPin = 26;
 String selenoidString;
 
@@ -12,7 +12,7 @@ void setup_selenoid(){
 }
 
 String loop_selenoid(){
-  if(distance - 3 >= maxWater){
+  if(distance >= maxWater){
     if(waiting_on >= 5){
       if(selenoid_on_tele){
         selenoid_status = true;

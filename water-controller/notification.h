@@ -24,12 +24,12 @@ void baterai_status(){
         bot.sendMessage(CHAT_ID, "Baterai is Missing", "");
       } else if(!selenoid_status && voltage < minVoltage){
         bot.sendMessage(CHAT_ID, "Baterai is Low", "");
-      } else {
+      } else if(!selenoid_status){
         bot.sendMessage(CHAT_ID, "Baterai is Good", "");
       }
       voltageStatusOld = voltageStatusNew;
     }else{
-      if(!selenoid_status && voltage > minVoltage){
+      if(!selenoid_status && voltage >= minVoltage){
         voltageStatusNew = true;
       }else{
         voltageStatusNew = false;

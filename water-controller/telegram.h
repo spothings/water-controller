@@ -38,16 +38,20 @@ void handleNewMessages(int numNewMessages) {
       bot.sendMessage(CHAT_ID, welcome, "");
 
       maxWater = write_maxWater(distance);
+      Serial.println(distance);
+      Serial.println(maxWater);
       String set_distance = "Ketinggian maksimal air sudah diatur : " + String(distance) + " CM.\n";
       bot.sendMessage(CHAT_ID, set_distance, "");
     }
 
     if (text == "/reset_min") {
-      String welcome = "Hallo, " + from_name + ".\n";
-      welcome += "Silahkan atur jarak minimal air\n\n";
-      bot.sendMessage(CHAT_ID, welcome, "");
-
+      String textMessage = "Silahkan atur jarak minimal air\n\n";
+      bot.sendMessage(CHAT_ID, textMessage, "");
+  
       minWater = write_minWater(distance);
+      Serial.println(distance);
+      Serial.println(minWater);
+      
       String set_distance = "Ketinggian minimal air sudah diatur : " + String(distance) + " CM.\n";
       bot.sendMessage(CHAT_ID, set_distance, "");
     }
