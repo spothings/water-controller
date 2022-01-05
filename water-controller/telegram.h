@@ -80,11 +80,13 @@ void handleNewMessages(int numNewMessages) {
 
     if (text == "/off") {
       selenoid_status = false;
+      selenoid_on_tele = false;
       bot.sendMessage(CHAT_ID, "Device Off", "");
     }
 
     if (text == "/on") {
       selenoid_status = true;
+      selenoid_on_tele = true;
       bot.sendMessage(CHAT_ID, "Device On", "");
     }
   }

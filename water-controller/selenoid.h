@@ -12,7 +12,7 @@ void setup_selenoid(){
 }
 
 String loop_selenoid(){
-  if(distance > maxWater - 2){
+  if(distance - 3 >= maxWater){
     if(waiting_on >= 5){
       if(selenoid_on_tele){
         selenoid_status = true;
