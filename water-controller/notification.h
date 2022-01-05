@@ -5,6 +5,7 @@ bool ultrasonikStatusOld = true;
 bool ultrasonikStatusNew = true;
 bool waterflowStatusOld = true;
 bool waterflowStatusNew = true;
+bool baterai_indikator = true;
 
 void serial_monitor(){
     Serial.print(selenoid); Serial.print(" : ");
@@ -18,14 +19,21 @@ void serial_monitor(){
 }
 
 void baterai_status(){
-  // Notify for baterai status
+  // Notify for baterai status  
     if(voltageStatusNew != voltageStatusOld){
-      if(!selenoid_status && voltage == 0){
-        bot.sendMessage(CHAT_ID, "Baterai is Missing", "");
-      } else if(!selenoid_status && voltage < minVoltage){
-        bot.sendMessage(CHAT_ID, "Baterai is Low", "");
-      } else if(!selenoid_status){
-        bot.sendMessage(CHAT_ID, "Baterai is Good", "");
+      if(baterai_indikator){
+        if(!selenoid_status && voltage == 0){
+          bot.sendMessage(CHAT_ID, "Baterai is Missing", "");
+          baterai_indikator = false;
+        } else if(!selenoid_status && voltage < minVoltage){
+          bot.sendMessage(CHAT_ID, "Baterai is Low", "");
+          baterai_indikator = false;
+        }
+      }else{
+        if(!selenoid_status){
+          bot.sendMessage(CHAT_ID, "Baterai is Good", "");
+          baterai_indikator = true;
+        }
       }
       voltageStatusOld = voltageStatusNew;
     }else{
