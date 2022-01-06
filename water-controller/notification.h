@@ -69,7 +69,7 @@ void waterflow_status(){
       if(selenoid_status){
         int time_to_full = time_water();
         bot.sendMessage(CHAT_ID, "Water On", "");
-        bot.sendMessage(CHAT_ID, "Full estimate " + String(time_to_full) + " Minute", "");
+        bot.sendMessage(CHAT_ID, "Full estimate " + String(time_to_full) + " Second", "");
       }
       if(selenoid_status && waterflow == 0.00){
         bot.sendMessage(CHAT_ID, "Selenoid or waterflow have error", "");

@@ -1,6 +1,6 @@
 // water
-int waterWidth = 30;
-int waterLength = 30;
+int waterWidth = 15;
+int waterLength = 15;
 
 // Measures flow sensor pulses
 volatile int flow_frequency;
@@ -61,6 +61,6 @@ double loop_waterflow (){
 int time_water(){
   int volumeWater = waterWidth * waterLength * (minWater-maxWater);
   volumeWater = volumeWater - (waterWidth * waterLength * (minWater-distance));
-  int time_to_full = (volumeWater/(waterflow/720))/320;
+  int time_to_full = (volumeWater/(waterflow/720))/3600;
   return time_to_full;
 }
