@@ -15,7 +15,7 @@ void serial_monitor(){
     Serial.print(voltage); Serial.print("V : ");
     Serial.print(waterflow); Serial.print("L/m : ");
     Serial.print(maxWater); Serial.print("CM : ");
-    Serial.print(minWater); Serial.println("CM : ");
+    Serial.print(minWater); Serial.print("CM\n");
 }
 
 void baterai_status(){
