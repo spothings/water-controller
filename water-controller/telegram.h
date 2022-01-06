@@ -11,7 +11,7 @@ void setup_telegram(){
   client.setCACert(TELEGRAM_CERTIFICATE_ROOT);
 
   // send message to telegram on startup
-  bot.sendMessage(CHAT_ID, "Bot started up", "");
+  bot.sendMessage(CHAT_ID, "Bot started up\ntype /on to turn on device", "");
 }
 
 void handleNewMessages(int numNewMessages) {
@@ -33,9 +33,8 @@ void handleNewMessages(int numNewMessages) {
     String from_name = bot.messages[i].from_name;
 
     if (text == "/reset_max") {
-      String welcome = "Hallo, " + from_name + ".\n";
-      welcome += "Silahkan atur jarak ketinggian air\n\n";
-      bot.sendMessage(CHAT_ID, welcome, "");
+      String textMessage = "Silahkan atur jarak ketinggian air\n\n";
+      bot.sendMessage(CHAT_ID, textMessage, "");
 
       maxWater = write_maxWater(distance);
       Serial.println(distance);

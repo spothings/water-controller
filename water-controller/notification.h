@@ -66,15 +66,15 @@ void ultrasonic_status(){
 void waterflow_status(){
     // Notify for waterflow
     if(waterflowStatusNew != waterflowStatusOld){
-      if(selenoid_status && waterflow == 0.00){
-        bot.sendMessage(CHAT_ID, "Selenoid or waterflow have error", "");
-      } else if(waterflow != 0.00 && !selenoid_status){
-        bot.sendMessage(CHAT_ID, "Selenoid or waterflow have error", "");
-      }
       if(selenoid_status){
         int time_to_full = time_water();
         bot.sendMessage(CHAT_ID, "Water On", "");
         bot.sendMessage(CHAT_ID, "Full estimate " + String(time_to_full) + " Minute", "");
+      }
+      if(selenoid_status && waterflow == 0.00){
+        bot.sendMessage(CHAT_ID, "Selenoid or waterflow have error", "");
+      } else if(waterflow != 0.00 && !selenoid_status){
+        bot.sendMessage(CHAT_ID, "Selenoid or waterflow have error", "");
       }
       waterflowStatusOld = waterflowStatusNew;
     } else {

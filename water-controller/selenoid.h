@@ -7,7 +7,6 @@ const int selenoidPin = 26;
 String selenoidString;
 
 void setup_selenoid(){
-  // set pin selenoid as output
   pinMode(selenoidPin, OUTPUT);
 }
 
