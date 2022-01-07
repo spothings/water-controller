@@ -92,6 +92,13 @@ void handleNewMessages(int numNewMessages) {
       selenoid_on_tele = true;
       bot.sendMessage(CHAT_ID, "Device On", "");
     }
+
+    if (text == "/force_on") {
+      selenoid_status = true;
+      selenoid_on_tele = true;
+      digitalWrite(selenoidPin, HIGH);
+      bot.sendMessage(CHAT_ID, "Device force On", "");
+    }
   }
 }
 
